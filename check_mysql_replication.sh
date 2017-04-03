@@ -8,6 +8,15 @@ MYUS=$5
 MYPW=$6
 CMD="/usr/bin/mysql -h $MYIP -P $MYPO -u $MYUS -p$MYPW"
 FOUT="/tmp/check_mysql_replication_${ROLE}_${MYIP}_${MYPO}"
+
+rm -f $FOUT;
+DELETED=$?
+if [ $DELETED -ne 0 ]
+then
+	echo "Can't write output file: $FOUT"
+	exit 2
+fi
+
 if [ "$MODE" == "-d" ]
 then
 	echo -n "show $ROLE status \G" | $CMD
